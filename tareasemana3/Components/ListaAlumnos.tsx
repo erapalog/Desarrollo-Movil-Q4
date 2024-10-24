@@ -21,17 +21,12 @@ const [Estudiantes, setEstudiantes] = useState<Estudiante[]>([
    ]
 )
 
-const [nuevoArreglo, setNuevoArreglo] = useState(Estudiantes)
+let nuevoArreglo = Estudiantes
 
    function cargarAlumnos(){ 
-    let nuevoEstudiante:Estudiante = {
-            id: Estudiantes.length+1,
-            nombre: Nombre
-        }
-    let estudiantesViejo:Estudiante[] = Estudiantes
-    estudiantesViejo.push(nuevoEstudiante)
-        setNuevoArreglo(estudiantesViejo)
-        setNombre('')     
+    let estudiante:Estudiante = {id: Estudiantes.length+1, nombre: Nombre}
+    nuevoArreglo.push(estudiante)
+    setNombre('')
    }
 
   
@@ -72,15 +67,7 @@ const [nuevoArreglo, setNuevoArreglo] = useState(Estudiantes)
 
 const styles = StyleSheet.create({
 
-    row: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingVertical: 10,
-      paddingHorizontal: 20,
-      borderBottomWidth: 1,
-      borderBottomColor: '#E0E0E0',
-    },
-
+   
     Dato:{
        marginHorizontal:10
     },
