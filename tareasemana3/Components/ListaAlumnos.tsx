@@ -38,7 +38,7 @@ let nuevoArreglo = Estudiantes
     setTimeout(()=>{    
        setEstudiantes(nuevoArreglo) 
         setContador(contador+1)       
-    },3000)    
+    },5000)    
    }, [contador])
 
     return (
