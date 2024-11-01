@@ -17,7 +17,8 @@ export default function Usuario() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor :isDarkTheme ? '#333' : '#fff'}]}>
+      <View style={styles.borderedView}>
       <Text style={styles.title}>Información Personal</Text>
 
       <Text style={styles.label}>Nombre:</Text>
@@ -58,9 +59,10 @@ export default function Usuario() {
         placeholder="DD/MM/AAAA"
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text>Enviar</Text>
+      <TouchableOpacity style={[styles.buttonContent]} onPress={handleSubmit}>
+        <Text style={styles.button}>Enviar</Text>
       </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -68,8 +70,8 @@ export default function Usuario() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#fff',
   },title: {
     fontSize: 18,
@@ -97,14 +99,42 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#007BFF',
+    color: '#ffffff', 
     borderRadius: 5,
     paddingVertical: 10,
-    marginTop: 10,
+    marginTop: 5,
+    marginStart:18,
+    width: 65
+  },
+  buttonContent: {
+    alignItems: 'center',  
+    justifyContent: 'center', 
+    backgroundColor: '#007BFF',
+    borderRadius: 6,
+    marginStart: 15,
   },
   buttonText: {
-    color: '#fff',
+    color: '#ffffff',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 16,
-  }
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
+  borderedView: {
+    width: 330,
+    height: 500,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 10,
+    marginStart: 15,
+  },
+  lightBackground: {
+    backgroundColor: '#fff',
+},
+darkBackground: {
+    backgroundColor: '#333',
+},
 });
