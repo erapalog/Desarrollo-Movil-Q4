@@ -5,15 +5,14 @@ import { UseTheme } from '../../Context/ThemeLocalProvider';
 export default function Usuario() {
   const {isDarkTheme} = UseTheme();
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [dob, setDob] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [apellido, setApellido] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [fechaNacimiento, setFechaNacimiento] = useState('');
 
   const handleSubmit = () => {
-    // Aquí puedes manejar el envío del formulario
-    Alert.alert('Información Enviada', `Nombre: ${firstName} ${lastName}\nCorreo: ${email}\nTeléfono: ${phone}\nFecha de Nacimiento: ${dob}`);
+    Alert.alert('Información Enviada', `Nombre: ${nombre} ${apellido}\correo: ${correo}\telefono: ${telefono}\nFecha de Nacimiento: ${fechaNacimiento}`);
   };
 
   return (
@@ -24,38 +23,38 @@ export default function Usuario() {
       <Text style={styles.label}>Nombre:</Text>
       <TextInput
         style={styles.input}
-        value={firstName}
-        onChangeText={setFirstName}
+        value={nombre}
+        onChangeText={setNombre}
       />
 
       <Text style={styles.label}>Apellido:</Text>
       <TextInput
         style={styles.input}
-        value={lastName}
-        onChangeText={setLastName}
+        value={apellido}
+        onChangeText={setApellido}
       />
 
       <Text style={styles.label}>Correo:</Text>
       <TextInput
         style={styles.input}
-        value={email}
-        onChangeText={setEmail}
+        value={correo}
+        onChangeText={setCorreo}
         keyboardType="email-address"
       />
 
       <Text style={styles.label}>Teléfono:</Text>
       <TextInput
         style={styles.input}
-        value={phone}
-        onChangeText={setPhone}
+        value={telefono}
+        onChangeText={setTelefono}
         keyboardType="phone-pad"
       />
 
       <Text style={styles.label}>Fecha de Nacimiento:</Text>
       <TextInput
         style={styles.input}
-        value={dob}
-        onChangeText={setDob}
+        value={fechaNacimiento}
+        onChangeText={setFechaNacimiento}
         placeholder="DD/MM/AAAA"
       />
 
@@ -70,8 +69,6 @@ export default function Usuario() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#fff',
   },title: {
     fontSize: 18,
@@ -96,6 +93,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: '#fff',
     marginStart: 10,
+    marginRight:30
   },
   button: {
     backgroundColor: '#007BFF',
@@ -112,6 +110,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#007BFF',
     borderRadius: 6,
     marginStart: 15,
+    marginRight:30
   },
   buttonText: {
     color: '#ffffff',
@@ -124,12 +123,11 @@ const styles = StyleSheet.create({
   borderedView: {
     width: 330,
     height: 500,
-    justifyContent: 'center',
-    alignItems: 'center',
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 10,
-    marginStart: 15,
+    marginStart: 30,
+    marginTop: 10
   },
   lightBackground: {
     backgroundColor: '#fff',
