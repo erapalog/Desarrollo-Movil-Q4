@@ -1,10 +1,10 @@
 import { View, Text, Switch, StyleSheet } from 'react-native';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { UseTheme } from '../../Context/ThemeLocalProvider';
+import { UseContext } from '../../Context/Provider';
 
 export default function Configuraciones() {
-    const { isDarkTheme, toggleTheme } = UseTheme();
+    const { isDarkTheme, toggleTheme } = UseContext();
 
     return (
         <View style={[styles.container, isDarkTheme ? styles.darkBackground : styles.lightBackground]}>

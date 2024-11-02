@@ -1,67 +1,48 @@
 import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
-import { UseTheme } from '../../Context/ThemeLocalProvider';
+import { UseContext } from '../../Context/Provider';
+import FlatListApp from '../FlatList/FlatListApp';
+import { Snackbar, Icon } from 'react-native-paper';
 
 export default function Usuario() {
-  const {isDarkTheme} = UseTheme();
+  const [visible, setVisible] = useState(false);
+    const showSnackbar = () => setVisible(true);
+    const hideSnackbar = () => setVisible(false);
 
-  const [nombre, setNombre] = useState('');
-  const [apellido, setApellido] = useState('');
-  const [correo, setCorreo] = useState('');
-  const [telefono, setTelefono] = useState('');
-  const [fechaNacimiento, setFechaNacimiento] = useState('');
+  const {isDarkTheme, nombre, apellido, telefono, correo, fechaNacimiento, addUsuario, setNombre, setApellido, setCorreo, setTelefono, setFechaNacimiento} = UseContext();
 
   const handleSubmit = () => {
-    Alert.alert('Información Enviada', `Nombre: ${nombre} ${apellido}\correo: ${correo}\telefono: ${telefono}\nFecha de Nacimiento: ${fechaNacimiento}`);
+    addUsuario();
+    showSnackbar();
+    console.log('Información Enviada', `Nombre: ${nombre} ${apellido}\ncorreo: ${correo}\ntelefono: ${telefono}\nnFecha de Nacimiento: ${fechaNacimiento}`);
   };
-
+  
   return (
     <View style={[styles.container, {backgroundColor :isDarkTheme ? '#333' : '#fff'}]}>
       <View style={styles.borderedView}>
       <Text style={styles.title}>Información Personal</Text>
 
       <Text style={styles.label}>Nombre:</Text>
-      <TextInput
-        style={styles.input}
-        value={nombre}
-        onChangeText={setNombre}
-      />
+      <TextInput style={styles.input} value={nombre} onChangeText={setNombre} placeholder="Nombre" placeholderTextColor="#aaa"/>
 
       <Text style={styles.label}>Apellido:</Text>
-      <TextInput
-        style={styles.input}
-        value={apellido}
-        onChangeText={setApellido}
-      />
+      <TextInput style={styles.input} value={apellido} onChangeText={setApellido} placeholder="Apellido" placeholderTextColor="#aaa" />
 
       <Text style={styles.label}>Correo:</Text>
-      <TextInput
-        style={styles.input}
-        value={correo}
-        onChangeText={setCorreo}
-        keyboardType="email-address"
-      />
+      <TextInput style={styles.input} value={correo} onChangeText={setCorreo} placeholder="correo@correo.com" placeholderTextColor="#aaa" />
 
       <Text style={styles.label}>Teléfono:</Text>
-      <TextInput
-        style={styles.input}
-        value={telefono}
-        onChangeText={setTelefono}
-        keyboardType="phone-pad"
-      />
+      <TextInput style={styles.input} value={telefono} onChangeText={setTelefono} keyboardType="phone-pad" placeholder="9999-3333" placeholderTextColor="#aaa" />
 
       <Text style={styles.label}>Fecha de Nacimiento:</Text>
-      <TextInput
-        style={styles.input}
-        value={fechaNacimiento}
-        onChangeText={setFechaNacimiento}
-        placeholder="DD/MM/AAAA"
-      />
+      <TextInput style={styles.input} value={fechaNacimiento} onChangeText={setFechaNacimiento} placeholder="01/01/1990" placeholderTextColor="#aaa" />
 
       <TouchableOpacity style={[styles.buttonContent]} onPress={handleSubmit}>
         <Text style={styles.button}>Enviar</Text>
       </TouchableOpacity>
+      <FlatListApp/>
       </View>
+      <Snackbar visible={visible} onDismiss={hideSnackbar} duration={2000} style={styles.snackbar}><Text style={styles.text}><Icon source="check-circle" color='#ffffff' size={15}/> Registro guardado exitosamente! </Text></Snackbar>
     </View>
   );
 };
@@ -69,6 +50,8 @@ export default function Usuario() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     backgroundColor: '#fff',
   },title: {
     fontSize: 18,
@@ -129,10 +112,21 @@ const styles = StyleSheet.create({
     marginStart: 30,
     marginTop: 10
   },
-  lightBackground: {
+    lightBackground: {
     backgroundColor: '#fff',
-},
-darkBackground: {
+  },
+    darkBackground: {
     backgroundColor: '#333',
-},
+  },
+  snackbar: {
+    backgroundColor: '#4CAF50',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start', 
+    color: 'white',
+  },
+  text: {
+    color: 'white',
+    fontSize: 13,
+  },
 });
