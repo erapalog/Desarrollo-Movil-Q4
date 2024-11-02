@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity} from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, Keyboard} from 'react-native';
 import React, {useState} from 'react';
 import { UseContext } from '../../Context/Provider';
 import FlatListApp from '../FlatList/FlatListApp';
@@ -14,6 +14,7 @@ export default function Usuario() {
   const handleSubmit = () => {
     addUsuario();
     showSnackbar();
+    Keyboard.dismiss();
     console.log('Información Enviada', `Nombre: ${nombre} ${apellido}\ncorreo: ${correo}\ntelefono: ${telefono}\nnFecha de Nacimiento: ${fechaNacimiento}`);
   };
   
