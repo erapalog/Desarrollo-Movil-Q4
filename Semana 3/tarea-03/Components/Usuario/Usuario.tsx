@@ -5,7 +5,7 @@ import FlatListApp from '../FlatList/FlatListApp';
 import { Snackbar, Icon } from 'react-native-paper';
 
 export default function Usuario() {
-  const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(false);
     const showSnackbar = () => setVisible(true);
     const hideSnackbar = () => setVisible(false);
 
