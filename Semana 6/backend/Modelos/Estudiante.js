@@ -1,8 +1,9 @@
 
-const { DataTypes } = require('sequelize')
-const {sequelize} = require('../bd/database')
 
-const Estudiante = sequelize.define('estudiante', {
+const { DataTypes } = require('sequelize')
+const sequelize = require('../bd/database')
+
+const Estudiante = sequelize.define('Estudiante', {
     idestudiante: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -25,13 +26,11 @@ const Estudiante = sequelize.define('estudiante', {
         type: DataTypes.STRING,
         allowNull: false   
     }
-
 },
     {
-        tableName: 'estudiante',
-        timesTamps: false
+        tableName: 'Estudiante',
+        timestamps: false
     }
-
 )
 
-module.exports=Estudiante;
+module.exports= Estudiante;

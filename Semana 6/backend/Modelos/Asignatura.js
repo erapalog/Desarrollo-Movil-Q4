@@ -18,10 +18,10 @@ const Asignatura = sequelize.define('Asignatura', {
 
     },
 },
-    {
-        tableName: 'asignatura',
-        timesTamps: false
-    }
+{
+    tableName: 'Asignatura',
+    timestamps: false, // Desactiva las columnas createdAt y updatedAt
+  }
 
 )
 
