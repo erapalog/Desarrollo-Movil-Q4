@@ -1,6 +1,8 @@
 
 const { DataTypes } = require('sequelize')
 const sequelize = require('../bd/database')
+const AsignaturaEstudiante = require('./AsignaturaEstudiante')
+const Estudiante = require('./Estudiante')
 
 const Asignatura = sequelize.define('Asignatura', {
     idasignatura: {
@@ -24,5 +26,13 @@ const Asignatura = sequelize.define('Asignatura', {
   }
 
 )
+
+Asignatura.associate = (models) => {
+    Asignatura.belongsToMany(models.Estudiante, {
+      through: models.AsignaturaEstudiante,
+      foreignKey: 'idasignatura',
+    });
+  };
+  
 
 module.exports=Asignatura;

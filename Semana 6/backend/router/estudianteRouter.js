@@ -9,5 +9,7 @@ router.post('/',estudianteController.postEstudiante)
 router.put('/:idestudiante',estudianteController.putEstudiante)
 router.delete('/:idestudiante',estudianteController.deleteEstudiante)
 
+router.get('/estudianteasignatura',estudianteController.getEstudianteAsignatura)
+
 
 module.exports=router;
