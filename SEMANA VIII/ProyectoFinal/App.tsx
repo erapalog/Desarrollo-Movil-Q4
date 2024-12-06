@@ -1,10 +1,9 @@
 import Navigation from './Components/Navegacion/Navigation';
-import ContentTheme from './Context/Provider';
-
+import Provider from './Context/Provider';
 export default function App() {
   return (
-    <ContentTheme>
+    <Provider>
       <Navigation></Navigation>
-    </ContentTheme>
+    </Provider>
   )
 }

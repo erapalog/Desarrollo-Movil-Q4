@@ -12,10 +12,10 @@ export default function ModalAlumno() {
                     <Text style={styles.modalTitle}>Información del Alumno</Text>
                     {dataAlumno && (
                         <>
-                            <Text style={styles.modalText}><b>Nombre:</b> {dataAlumno.nombre}</Text>
-                            <Text style={styles.modalText}><b>Género:</b> {dataAlumno.genero == 1 ? 'Masculino': 'Femenino'}</Text>
-                            <Text style={styles.modalText}><b>Fecha Nacimiento</b>: {dataAlumno.fecha_nacimiento}</Text>
-                            <Text style={styles.modalText}><b>DNI:</b> {dataAlumno.dni}</Text>
+                            <Text style={styles.modalText}>Nombre: {dataAlumno.nombre}</Text>
+                            <Text style={styles.modalText}>Género: {dataAlumno.genero == 1 ? 'Masculino': 'Femenino'}</Text>
+                            <Text style={styles.modalText}>Fecha Nacimiento: {dataAlumno.fecha_nacimiento}</Text>
+                            <Text style={styles.modalText}>DNI: {dataAlumno.dni}</Text>
                         </>
                     )}
 

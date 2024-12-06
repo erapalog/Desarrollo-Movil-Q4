@@ -38,10 +38,10 @@ export default function Matricula() {
       <Text style={styles.title}>Matrícula</Text>
       <Text style={styles.space}></Text>
 
-      <Text style={styles.label}><b>Estudiante</b></Text>
+      <Text style={styles.label}>Estudiante</Text>
       <Picker value={selectIdAlumno} onValueChange={onValueChangeAlumno} listValues={listAlumnos} />
 
-      <Text style={styles.label}><b>Asignatura</b></Text>
+      <Text style={styles.label}>Asignatura</Text>
       <Picker value={selectIdAsignatura} onValueChange={onValueChangeAsignatura} listValues={listAsignaturas} />
 
       <View style={styles.buttonContainer}>

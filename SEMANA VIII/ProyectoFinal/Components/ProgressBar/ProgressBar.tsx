@@ -1,56 +1,59 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, StyleSheet, Dimensions, Animated } from 'react-native';
+import * as Progress from 'react-native-progress';
 
 const screenWidth = Dimensions.get('window').width;
+interface props {
+    progressNumber: number;
+    label: string;
+}
 
-export default function ProgressBar({ progress, label }) {
-    const animatedProgress = new Animated.Value(0);
-    React.useEffect(() => {Animated.timing(animatedProgress, { toValue: progress, duration: 1000, useNativeDriver: false, }).start();
-    }, [progress]);
+export default function ProgressBar({ progressNumber, label }: props) {
+    const [progress, setProgress] = useState(progressNumber);
 
-    const progressWidth = animatedProgress.interpolate({
-        inputRange: [0, 100],
-        outputRange: ['0%', '100%'],
-    });
+  useEffect(() => {
+    if (progress < 1) {
+      const interval = setInterval(() => {
+        setProgress(prevProgress => Math.round(Math.min(prevProgress + 0.01, 1)));
+      }, 100);
+      return () => clearInterval(interval);
+    }
+  }, [progress]);
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.progressBarBackground}>
-                <Animated.View style={[styles.progressBarFill, { width: progressWidth},]}/>
-            </View>
-            <Text style={styles.percentage}>Avance: {progress}%</Text>
-        </View>
-    );
-};
+  return (
+    <View style={styles.container}>
+      <Progress.Bar 
+        progress={progress} 
+        width={100} 
+        height={10}
+        color="#0d6efd"
+        unfilledColor="#e0e0e0"
+        borderRadius={5}
+        borderWidth={0}
+      />
+      <Text style={styles.progressText}>{progress}%</Text>
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
     container: {
-        width: screenWidth - 30,
-        alignItems: 'flex-start',
-        marginVertical: 1,
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginVertical: 1,
     },
-    label: {
-        fontSize: 16,
-        color: '#333',
-        fontWeight: 'bold',
-        marginBottom: 10,
+    title: {
+      fontSize: 10,
+      fontWeight: '600',
+      marginBottom: 1,
+      color: '#333',
     },
-    progressBarBackground: {
-        width: '28%',
-        height: 10,
-        backgroundColor: '#e0e0e0',
-        borderRadius: 6,
-        overflow: 'hidden',
-        marginBottom: 3,
-    },
-    progressBarFill: {
-        height: '100%',
-        backgroundColor: '#3498db',
-        borderRadius: 6,
-    },
-    percentage: {
-        fontSize: 13,
-        fontWeight: 'bold',
-        color: '#3498db',
-    },
-});
+    progressText: {
+      marginTop: 5,
+      fontSize: 12,
+      color: '#333',
+      fontWeight: '500',
+    }
+  });
+  

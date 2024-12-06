@@ -1,7 +1,6 @@
 import { View, StyleSheet } from 'react-native';
 import React, { useContext, useState, useEffect } from 'react';
 import { Content } from './Context';
-import { Transaccion } from '../Models/Transaccion';
 import { Task } from '../Models/Task';
 import { Status } from '../Models/Status';
 import Api from '../Service/Api';
@@ -11,24 +10,20 @@ interface Props {
 }
 
 interface ContextType {
-  isDarkTheme: boolean;
-  toggleTheme: () => void;
+  isDarkTheme: boolean,
+  toggleTheme: (estado: boolean) => void,
   listTask: Task[],
   listStatus: Status[],
-  listaTransacciones: Transaccion[],
-  saldo: number,
-  monto: (monto: string) => void,
-  deposito: (saldo: number) => void,
-  retiro: (saldo: number) => void,
-  transferir: (saldo: number) => void,
-  setNombre: (nombre: string) => void,
-  setCuenta: (cuenta: string) => void,
-  setMonto: (monto: string) => void,
+  listTaskTotal: Task[],
+  applyFilter: (estado: number) => void,
+  estadoFiltro: number,
 }
 
 export default function Provider({ children }: Props) {
-  const [listaTareas, setLlistTask] = useState<Task[]>([]);
-  const [listStatus, setLlistStatus] = useState<Status[]>([]);
+  const [listTask, setLlistTask] = useState<Task[]>([]);
+  const [listTaskTotal, setListTaskTotal] = useState<Task[]>([]);
+  const [listStatus, setListStatus] = useState<Status[]>([]);
+  const [estadoFiltro, setEstadoFiltro] = useState<number>(-2);
 
   const [id, setId] = useState(0);
   const [tarea, setTarea] = useState('');
@@ -37,110 +32,69 @@ export default function Provider({ children }: Props) {
   const [prioridad, setPrioridad] = useState(0);
   const [idestado, setIdestado] = useState(0);
   const [idcategoria, setIdcategoria] = useState(0);
+  const [filtroTareas, setFiltroTareas] = useState('-1');
 
   const [visible, setVisible] = useState(false);
   const showSnackbar = () => setVisible(true);
   const hideSnackbar = () => setVisible(false);
 
   const [isDarkTheme, setIsDarkTheme] = useState(false);
-  const toggleTheme = () => setIsDarkTheme(!isDarkTheme);
 
-  const [saldo, setSaldo] = useState(10000.00);
-  const [listaTransacciones, setListaTransacciones] = useState([]);
-
-  const [cuenta, setCuenta] = useState('');
-  const [monto, setMonto] = useState('0');
-  const [nombre, setNombre] = useState('');
-
-  const loadTask = async () => {
-    try {
-
-      const response = await Api.get('/');
-      setLlistTask(response.data);
-      console.info("Cargado");
-      console.info(response.data.data);
-    } catch (error) {
-      console.error('loadTask ', error);
+  const toggleTheme = (estado: boolean) => {
+    setIsDarkTheme(!estado);
+    if (estado) {
+      loadTask(-1);
+    } else {
+      loadTask(-2);
     }
   }
 
-  const deposito = () => {
-    setSaldo(saldo + 500);
-    const trans = {
-      "No": `T00${listaTransacciones.length + 1}`,
-      "fecha": new Date().toLocaleString(),
-      "monto": 500,
-      "tipoTransaccion": "Deposito",
-      "comprobante": `07112024${Math.floor(Math.random() * 1000)}`
-    };
+  const applyFilter = (estado: number) => {
+    loadTask(estado);
+  }
 
-    setListaTransacciones(prevList => {
-      if (Array.isArray(prevList)) {
-        return [...prevList, trans];
-      } else {
-        return [trans];
-      }
-    });
-  };
+  const load = async () => {
+    console.info("Iniciando ********************************");
+    loadTask(-1);
+    loadTaskTotal();
+    console.info("Finalizado ********************************");
+  }
 
-  const retiro = () => {
-    setSaldo(saldo - 200);
-    const trans = {
-      "No": `T00${listaTransacciones.length + 1}`,
-      "fecha": new Date().toLocaleString(),
-      "monto": 200,
-      "tipoTransaccion": "Retiro",
-      "comprobante": `07112024${Math.floor(Math.random() * 1000)}`
-    };
+  const loadTask = async (estado: number) => {
+    setEstadoFiltro(estado);
+    try {
+      console.info("loadTask=" + estado);
+      const response = await Api.get('/' + estado + '/2');
+      setLlistTask(response.data);
+    } catch (error) {
+      console.error('loadTask ', error);
+    }
 
-    setListaTransacciones(prevList => {
-      if (Array.isArray(prevList)) {
-        return [...prevList, trans];
-      } else {
-        return [trans];
-      }
-    });
-  };
+    console.info("loadTask=" + loadTask.length);
+  }
 
-  const transferir = () => {
-    setCuenta('');
-    setMonto('0');
-    setNombre('');
-    setSaldo(saldo - parseFloat(monto));
+  const loadTaskTotal = async () => {
+    try {
+      console.info("loadTaskTotal=TODAS");
+      const response = await Api.get('/-1/2');
+      setListTaskTotal(response.data);
+    } catch (error) {
+      console.error('loadTaskTotal ', error);
+    }
+    console.info("loadTaskTotal=" + listTaskTotal.length);
+  }
 
-    const trans = {
-      "No": `T00${listaTransacciones.length + 1}`,
-      "fecha": new Date().toLocaleString(),
-      "monto": parseFloat(monto),
-      "tipoTransaccion": "Transferencia",
-      "comprobante": `07112024${Math.floor(Math.random() * 1000)}`
-    };
-
-    setListaTransacciones(prevList => {
-      if (Array.isArray(prevList)) {
-        return [...prevList, trans];
-      } else {
-        return [trans];
-      }
-    });
-  };
-
-  useEffect(()=>{loadTask(); }, []);
+  useEffect(() => { load(); }, []);
 
   const value: ContextType = {
     isDarkTheme,
     toggleTheme,
-    listaTareas, listStatus,
-    saldo,
-    deposito,
-    retiro,
-    transferir,
-    setCuenta,
-    setMonto,
-    setNombre,
-    monto,
-    listaTransacciones
-  };
+    listTask,
+    listStatus,
+    listTaskTotal,
+    applyFilter,
+    estadoFiltro,
+  }
 
   return (
     <Content.Provider value={value}>
@@ -148,7 +102,7 @@ export default function Provider({ children }: Props) {
         {children}
       </View>
     </Content.Provider>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -157,8 +111,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#fff',
   },
-});
+})
 
 export const UseContext = () => {
   return useContext(Content);
-};
+}

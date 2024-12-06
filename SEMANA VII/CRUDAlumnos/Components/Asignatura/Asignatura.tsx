@@ -13,7 +13,7 @@ export default function Asignatura() {
 
       <Text style={styles.space}></Text>
 
-      <Text style={styles.label}><b>Nombre: </b></Text>
+      <Text style={styles.label}>Nombre:</Text>
       <TextInput style={styles.input} value={nombreAsignatura} placeholder="Ciencias Sociales" onChangeText={setNombreAsignatura} placeholderTextColor="#aaa" />
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={crearAsignatura}>

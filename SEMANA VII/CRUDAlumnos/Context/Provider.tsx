@@ -46,7 +46,7 @@ export default function Provider({ children }: Props) {
   
   const getAlumnos = async () => {
     try {
-
+      console.info("getAlumnos()");
       const response = await Api.get('alumno');
       setListAlumnos(response.data.data);
     } catch (error) {
@@ -136,7 +136,7 @@ export default function Provider({ children }: Props) {
 
   const getAsignaturasXAlumnosById = async (id:number) => {
     try {
-
+      console.info("getAsignaturasXAlumnosById()");
       const response = await Api.get('asignaturasxalumno/'+id);
       setListMatricula(response.data.data);
     } catch (error) {

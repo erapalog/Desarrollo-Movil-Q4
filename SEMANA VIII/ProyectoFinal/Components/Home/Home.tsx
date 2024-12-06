@@ -11,11 +11,11 @@ export default function App() {
     datasets: [
       {
         data: [20, 45, 28, 80, 99, 43],
-        color: (opacity = 1) => `rgba(152, 132, 255, ${opacity})`, // Pastel morado
-        strokeWidth: 3, // Más grueso para un toque más elegante
+        color: (opacity = 1) => `rgba(152, 132, 255, ${opacity})`, 
+        strokeWidth: 3, 
       },
     ],
-  };
+  }
 
   const chartConfig = {
     backgroundColor: '#f0f0f0',
@@ -37,7 +37,7 @@ export default function App() {
       strokeWidth: '2',
       stroke: '#ffa726', 
     },
-  };
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -45,7 +45,7 @@ export default function App() {
         <Text style={styles.title}>Gráfico de Línea</Text>
         <LineChart
           data={data}
-          width={screenWidth - 40} // Ajustar el gráfico al ancho de la pantalla
+          width={screenWidth - 60}
           height={240}
           chartConfig={chartConfig}
           bezier
@@ -53,7 +53,7 @@ export default function App() {
         />
       </View>
     </ScrollView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
